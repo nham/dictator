@@ -10,7 +10,6 @@
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
 var TodoConstants = require('../constants/TodoConstants');
 var assign = require('object-assign');
 
@@ -76,7 +75,7 @@ function destroyCompleted() {
   }
 }
 
-var TodoStore = assign({}, EventEmitter.prototype, {
+var TodoStore = {
 
   todoAppCallback: null,
 
@@ -118,7 +117,7 @@ var TodoStore = assign({}, EventEmitter.prototype, {
   removeChangeListener: function() {
     this.todoAppCallback = null;
   }
-});
+};
 
 // Register to handle all updates
 AppDispatcher.register(function(payload) {
@@ -172,8 +171,6 @@ AppDispatcher.register(function(payload) {
   // needs to trigger a UI change after every view action, so we can make the
   // code less repetitive by putting it here.  We need the default case,
   // however, to make sure this only gets called after one of the cases above.
-  
-  // Don't emit the change. Just call TodoApp's callback.
   TodoStore.emitChange();
 
   return true; // No errors.  Needed by promise in Dispatcher.

@@ -29,18 +29,23 @@ function getTodoState() {
 }
 
 var TodoApp = React.createClass({
-
   getInitialState: function() {
     return getTodoState();
   },
 
+  // we want like a registration system of some kind. register() accepts
+  // a callback and returns an integer id (starting at 0).
+  // later if we want to unregister, we just unregister(id) to remove the
+  // callback
+
   componentDidMount: function() {
-    TodoStore.addChangeListener(this._onChange);
+    TodoStore.registerChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    TodoStore.removeChangeListener(this._onChange);
+    TodoStore.removeChangeListener();
   },
+
 
   /**
    * @return {object}

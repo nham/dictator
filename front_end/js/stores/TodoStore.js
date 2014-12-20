@@ -78,6 +78,8 @@ function destroyCompleted() {
 
 var TodoStore = assign({}, EventEmitter.prototype, {
 
+  todoAppCallback: null,
+
   /**
    * Tests whether all the remaining TODO items are marked as completed.
    * @return {boolean}
@@ -100,21 +102,21 @@ var TodoStore = assign({}, EventEmitter.prototype, {
   },
 
   emitChange: function() {
-    this.emit(CHANGE_EVENT);
+    this.todoAppCallback();
   },
 
   /**
    * @param {function} callback
    */
-  addChangeListener: function(callback) {
-    this.on(CHANGE_EVENT, callback);
+  registerChangeListener: function(callback) {
+    this.todoAppCallback = callback;
   },
 
   /**
    * @param {function} callback
    */
-  removeChangeListener: function(callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+  removeChangeListener: function() {
+    this.todoAppCallback = null;
   }
 });
 
@@ -170,6 +172,8 @@ AppDispatcher.register(function(payload) {
   // needs to trigger a UI change after every view action, so we can make the
   // code less repetitive by putting it here.  We need the default case,
   // however, to make sure this only gets called after one of the cases above.
+  
+  // Don't emit the change. Just call TodoApp's callback.
   TodoStore.emitChange();
 
   return true; // No errors.  Needed by promise in Dispatcher.

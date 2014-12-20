@@ -9,7 +9,7 @@
 
 var React = require('react');
 var ReactPropTypes = React.PropTypes;
-var TodoActions = require('../actions/TodoActions');
+var TodoHelpers = require('../actions/TodoHelpers');
 var TodoTextInput = require('./TodoTextInput.react');
 
 var cx = require('react/lib/cx');
@@ -72,7 +72,7 @@ var TodoItem = React.createClass({
   },
 
   _onToggleComplete: function() {
-    TodoActions.toggleComplete(this.props.todo);
+    TodoHelpers.toggleComplete(this.props.todo);
   },
 
   _onDoubleClick: function() {
@@ -86,12 +86,12 @@ var TodoItem = React.createClass({
    * @param  {string} text
    */
   _onSave: function(text) {
-    TodoActions.updateText(this.props.todo.id, text);
+    TodoHelpers.updateText(this.props.todo.id, text);
     this.setState({isEditing: false});
   },
 
   _onDestroyClick: function() {
-    TodoActions.destroy(this.props.todo.id);
+    TodoHelpers.destroy(this.props.todo.id);
   }
 
 });

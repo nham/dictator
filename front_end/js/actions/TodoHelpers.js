@@ -6,13 +6,13 @@
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * TodoActions
+ * TodoHelpers
  */
 
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var TodoConstants = require('../constants/TodoConstants');
 
-var TodoActions = {
+var TodoHelpers = {
 
   /**
    * @param  {string} text
@@ -85,4 +85,4 @@ var TodoActions = {
 
 };
 
-module.exports = TodoActions;
+module.exports = TodoHelpers;

@@ -1,0 +1,114 @@
+TodoActions is largely organizational. It provides helper functions for the views to invoke.
+
+---
+
+The TodoApp component does not call any actions. What does it do instead?
+
+ - calls TodoStore.getAll() and TodoStore.areAllComplete() and saves them as state
+ - it provides a render() function that organizes Header/MainSection/Footer components
+ - it maintains the state while the TodoApp component is mounted. it does this by invoking some of TodoStore's methods that register listeners on CHANGE_EVENT. (this is possible because TodoStore has EventEmitter juju courtesy of this magical incantation:assign({}, EventEmitter.prototype). this listener just calls a callback, and the callback that TodoApp provides simply updates the state (calling TodoStore.getAll() and TodoStore.areAllComplete() and saving that as the state)
+
+
+---
+
+The burning question in my mind about TodoStore is: how is the CHANGE_EVENT triggered? Or how does it happen?
+
+Aha! The CHANGE_EVENT is "emitted" each time (and only when) the callback that TodoStore registers with AppDispatcher runs.
+
+
+--
+
+AppDispatcher: the callbacks only run when handleViewAction is called, and this is invoked by (and only by) the views. These pass data to the dispatcher, which calls all registered callbacks.
+
+
+Another example that the comments give in AppDispatcher is that we could have a function handlerServerAction which also dispatches, where the source is not the view but some other script (the one that makes AJAX calls to the server. when we get a response from the server the response gets forwarded as action data to the dispatcher, which again causes the store to update.
+
+---
+
+Big picture: 
+
+1. a user has some interaction with a view, causing a TodoAction to be invoked (handleViewAction is called)
+
+2. this causes TodoStore's callback to run, which causes the CHANGE_EVENT to be emitted on TodoStore.
+
+3. TodoApp has a callback provided as a listener to the CHANGE_EVENT. the callback queries the TodoStore state and saves it as the state locally inside TodoApp.
+
+
+Why not skip the event emitter thing entirely? The TodoApp callback could just called by the TodoStore callback. This would only be useful if we have multiple components that are querying the store and saving it as state. We only have 1, however. But I can see how, for bigger apps, the abstraction provided by the eventemitter/listener thing is useful.
+
+
+---
+
+How TodoTextInput works.
+
+whenever the text input loses focus, it invokes Header's _onSave method by passing the value of TodoTextInput's state.value.
+
+_onSave checks if the given string, when trimmed, is non-empty, and if so, calls TodoActions.create()
+
+
+so we've basically set up the following behavior:
+
+  when a text input loses focus, if the text input is something other than some amount of whitespace, then we send the action TODO_CREATE, along with a payload of text, to the dispatcher
+
+
+ 
+
+
+##################
+Flux architecture
+##################
+
+An action is an object consisting of
+
+ - an action type
+ - possibly some other data associated with the action
+
+Examples of actions in TodoMVC:
+
+ - TODO_CREATE: creates a new todo item in the store
+ - TODO_TOGGLE_COMPLETE_ALL: either sets the 'complete' field on every item in the store to true or false, depending on whether all items already all complete or not
+ - TODO_UNDO_COMPLETE: sets 'complete' to false on a specific todo item
+ - TODO_COMPLETE: sets 'complete' to true on a specific todo item
+ - TODO_UPDATE_TEXT: update todo item text for a specific todo item (unless the text has no non-whitespace)
+ - TODO_DESTROY: delete a todo item from the store
+ - TODO_DESTROY_COMPLETED: delete all completed items from the store
+
+Notice that all actions are sent from views to the TodoStore in the TodoMVC example. This is somewhat less interesting than in the general case, where there are multiple stores and multiple action sources.
+
+In another example, the flux-chat example, we have 3 stores:
+
+ - MessageStore
+ - ThreadStore
+ - UnreadThreadStore
+
+The MessageStore listens for these actions:
+
+ - CLICK_THREAD
+ - CREATE_MESSAGE
+ - RECEIVE_RAW_MESSAGES
+
+ThreadStore and UnreadThreadStore each listen for:
+
+ - CLICK_THREAD
+ - RECEIVE_RAW_MESSAGES
+
+It seems that no one listens for the RECEIVE_RAW_CREATED_MESSAGE action, which is definitely sent from code in ChatWebAPIUtils. I think nothing happens because the CREATE_MESSAGE action already creates it in the MessageStore, so RECEIVE_RAW_CREATED_MESSAGE is expected to not be any different (perhaps if there were some filtering or translation on server end you'd want to actually update the previously created message.)
+
+
+A dispatcher does 2 things:
+
+ - permits callbacks to be registered and stored.
+ - receives actions (via providing API methods, with a one-to-one correspondence between methods and action sources) and, upon receiving any action, passes the action to every stored callback.
+
+In other words, if we think of the stored callback as a "channel", then the dispatcher receives actions and forwards them along all established channels.
+
+In the example of TodoMVC, there is only one channel, from dispatcher to TodoStore, so all actions get forwarded to the TodoStore. After TodoStore handles each action it gets, it emits the CHANGE_EVENT signifying that the store has possibly changed. This event is effectively sent to the TodoApp component, which responds by querying the store and storing the results as the new state of the component.
+
+
+Components: also known as controller-views. Data gets fed to some components directly from the store, though in the TodoMVC example many components have no state (all data flows from the components that hold state, e.g. TodoApp in TodoMVC).
+
+A store:
+
+ - registers callbacks with the dispatcher
+
+views send actions to the dispatcher

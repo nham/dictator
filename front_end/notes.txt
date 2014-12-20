@@ -58,6 +58,9 @@ so we've basically set up the following behavior:
 Flux architecture
 ##################
 
+
+## Actions
+
 An action is an object consisting of
 
  - an action type
@@ -95,6 +98,8 @@ ThreadStore and UnreadThreadStore each listen for:
 It seems that no one listens for the RECEIVE_RAW_CREATED_MESSAGE action, which is definitely sent from code in ChatWebAPIUtils. I think nothing happens because the CREATE_MESSAGE action already creates it in the MessageStore, so RECEIVE_RAW_CREATED_MESSAGE is expected to not be any different (perhaps if there were some filtering or translation on server end you'd want to actually update the previously created message.)
 
 
+## Dispatcher
+
 A dispatcher does 2 things:
 
  - permits callbacks to be registered and stored.
@@ -105,10 +110,19 @@ In other words, if we think of the stored callback as a "channel", then the disp
 In the example of TodoMVC, there is only one channel, from dispatcher to TodoStore, so all actions get forwarded to the TodoStore. After TodoStore handles each action it gets, it emits the CHANGE_EVENT signifying that the store has possibly changed. This event is effectively sent to the TodoApp component, which responds by querying the store and storing the results as the new state of the component.
 
 
-Components: also known as controller-views. Data gets fed to some components directly from the store, though in the TodoMVC example many components have no state (all data flows from the components that hold state, e.g. TodoApp in TodoMVC).
+## Stores
 
 A store:
 
- - registers callbacks with the dispatcher
+ - stores data
+ - handles actions that are sent to it (usually actions that specify some modification of the store)
+ - send "CHANGE_EVENT" messages to the views each time an action is handled?
 
-views send actions to the dispatcher
+## Views
+
+UI elements. Usually render something to the screen. Some components send actions to the dispatcher (when a UI command is performed, for example) via the action helpers.
+
+
+## Controller view
+
+A view that listens to the stores for change events, maintains state and updates it whenever the change events occur.

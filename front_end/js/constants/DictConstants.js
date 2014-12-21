@@ -12,6 +12,7 @@
 var keyMirror = require('keymirror');
 
 module.exports = keyMirror({
+  DICT_INIT: null,
   DICT_OPEN_PORTAL: null,
   DICT_CLOSE_PORTAL: null,
   DICT_CLOSE_ALL: null

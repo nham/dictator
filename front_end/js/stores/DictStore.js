@@ -82,26 +82,25 @@ AppDispatcher.register(function(payload) {
   var text;
 
   switch(action.actionType) {
-    case DictConstants.TODO_CREATE:
-      text = action.text.trim();
-      if (text !== '') {
-        create(text);
+    case DictConstants.DICT_INIT:
+      var num_portals = action.number;
+      for (var i = 0; i < num_portals; i++) {
+        create()
       }
       break;
 
-    case DictConstants.TODO_UPDATE_TEXT:
-      text = action.text.trim();
-      if (text !== '') {
-        update(action.id, {text: text});
+    case DictConstants.DICT_OPEN_PORTAL:
+      set(action.id, true);
+      break;
+
+    case DictConstants.DICT_CLOSE_PORTAL:
+      set(action.id, false);
+      break;
+
+    case DictConstants.DICT_CLOSE_ALL:
+      for (var id in _todos) {
+          set(id, false);
       }
-      break;
-
-    case DictConstants.TODO_DESTROY:
-      destroy(action.id);
-      break;
-
-    case DictConstants.TODO_DESTROY_COMPLETED:
-      destroyCompleted();
       break;
 
     default:

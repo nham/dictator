@@ -15,7 +15,7 @@
 var LeftSide = require('./LeftSide.react');
 //var RightSide = require('./RightSide.react');
 var React = require('react');
-var TodoStore = require('../stores/TodoStore');
+//var TodoStore = require('../stores/TodoStore');
 
 
 var DictatorApp = React.createClass({

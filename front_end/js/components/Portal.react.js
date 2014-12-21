@@ -6,10 +6,15 @@ var Portal = React.createClass({
    * @return {object}
    */
   render: function() {
+    var style = {
+        'background-color': '#ffff7f',
+        'border': '1px dotted #333'
+    };
+
     return (
-      <div class="portal" style="background-color: #ffff7f">
+      <span className="portal" style={style}>
           {this.props.text}
-      </div>
+      </span>
     );
   },
 

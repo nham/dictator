@@ -9,9 +9,9 @@
 
 var React = require('react');
 
-var TodoApp = require('./components/TodoApp.react');
+var DictatorApp = require('./components/DictatorApp.react');
 
 React.render(
-  <TodoApp />,
-  document.getElementById('todoapp')
+  <DictatorApp />,
+  document.getElementById('dictator')
 );

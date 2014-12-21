@@ -13,9 +13,9 @@
  */
 
 var LeftSide = require('./LeftSide.react');
-//var RightSide = require('./RightSide.react');
+var RightSide = require('./RightSide.react');
 var React = require('react');
-//var TodoStore = require('../stores/TodoStore');
+var DictStore = require('../stores/DictStore');
 
 
 var DictatorApp = React.createClass({
@@ -26,7 +26,7 @@ var DictatorApp = React.createClass({
   	return (
       <div>
         <LeftSide />
-        //<RightSide />
+        <RightSide />
       </div>
   	);
   }

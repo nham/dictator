@@ -11,7 +11,7 @@ var React = require('react');
 var ReactPropTypes = React.PropTypes;
 var TodoHelpers = require('../actions/TodoHelpers');
 
-var Footer = React.createClass({
+var RightSide = React.createClass({
 
   propTypes: {
     allTodos: ReactPropTypes.object.isRequired
@@ -61,15 +61,8 @@ var Footer = React.createClass({
         {clearCompletedButton}
       </footer>
     );
-  },
-
-  /**
-   * Event handler to delete all completed TODOs
-   */
-  _onClearCompletedClick: function() {
-    TodoHelpers.destroyCompleted();
   }
 
 });
 
-module.exports = Footer;
+module.exports = RightSide;

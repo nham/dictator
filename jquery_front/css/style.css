@@ -1,0 +1,44 @@
+body {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 15px;
+}
+
+.hidden {
+	display: none;
+}
+
+#dictator {
+    background-color: #fff9f9;
+    max-width: 1000px;
+    margin: auto;
+	border: 1px solid #ccc;
+    padding: 0;
+    overflow: auto;
+}
+
+#dictator #left {
+    width: 50%;
+    margin: auto;
+    float: left;
+    border-right: 4px solid #333;
+    padding: 0;
+}
+
+#dictator #right {
+    margin-left: 50%;
+    padding: 0;
+}
+
+div.block {
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 0 10px;
+}
+
+#left p, #left ul {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.portal {
+    background-color: #D8E084;
+}

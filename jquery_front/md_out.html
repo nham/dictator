@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>dictator</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript">
+      MathJax.Hub.Queue(["Typeset",MathJax.Hub]);
+  </script>
+</head>
+<body>
+  <section id="dictator">
+    <div id="left">
+        <p>A <b>system</b> in a space \( \mathbb{X} \) is a collection of points that may move over time.</p>
+
+        <p>A system in a \( \mathbb{R}^n \) is said to be a <b>rigid body</b> if two things are true:</p>
+
+<ul>
+    <li>distance between any two points in the body never changes over time</li>
+    <li>the "orientation" of the body is preserved over time</li>
+</ul>
+
+<p>A <b>mechanism</b> is a finite collection of rigid bodies \( (b_1, \ldots, b_k) \) such that between \( b_i \) and \( b_{i+1} \) (for \( 1 \leq i < k \)) there is a joint of some kind connecting the two bodies.</p>
+
+<p>The collection of <span class="portal">affine isometries</span> is exactly the set of all compositions \(t \circ k\) where \(t\) is a <span class="portal"> translation</span> and \(k\) is a <span class="portal">central isometry</span>. <span class="portal">(Proof)</span></p>
+    </div>
+
+
+    <div id="right">
+      <div class="block">
+          <p>An <b>affine isometry</b> is an affine transformation \( \mathbb{R}^n \to \mathbb{R}^n\) which is also an isometry.</p>
+      </div>
+
+      <div class="block">
+          <p>A <b>translation</b> is any function \( \mathbb{R}^n \to \mathbb{R}^n \) defined by \(x \mapsto x + v\) for some \(v \in \mathbb{R}^n \).</p>
+      </div>
+
+      <div class="block">
+          <p>A <b>central isometry</b> is an isometry of \( \mathbb{R}^n \) that fixes the origin.</p>
+      </div>
+
+      <div class="block">
+          <p>The collection of affine isometries on \( \mathbb{R}^n \) is exactly the collection of compositions \( t \circ k \) where \( t \) is a translation of \( \mathbb{R}^n \) and \( k \) is a central isometry.</p>
+
+          <p><i>Proof:</i> blah blah blah math goes here. \( \Box \)</p>
+      </div>
+    </div>
+  </section>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

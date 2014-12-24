@@ -8,58 +8,25 @@
  */
 
 var React = require('react');
-var ReactPropTypes = React.PropTypes;
-var TodoHelpers = require('../actions/TodoHelpers');
+var Block = require('./Block.react');
+//var TodoHelpers = require('../actions/TodoHelpers');
 
 var RightSide = React.createClass({
-
-  propTypes: {
-    allTodos: ReactPropTypes.object.isRequired
-  },
 
   /**
    * @return {object}
    */
   render: function() {
-    var allTodos = this.props.allTodos;
-    var total = Object.keys(allTodos).length;
 
-    if (total === 0) {
-      return null;
-    }
-
-    var completed = 0;
-    for (var key in allTodos) {
-      if (allTodos[key].complete) {
-        completed++;
-      }
-    }
-
-    var itemsLeft = total - completed;
-    var itemsLeftPhrase = itemsLeft === 1 ? ' item ' : ' items ';
-    itemsLeftPhrase += 'left';
-
-    // Undefined and thus not rendered if no completed items are left.
-    var clearCompletedButton;
-    if (completed) {
-      clearCompletedButton =
-        <button
-          id="clear-completed"
-          onClick={this._onClearCompletedClick}>
-          Clear completed ({completed})
-        </button>;
-    }
-
+    var affine_isom_content = "An <b>affine isometry</b> is an affine transformation $\mathbb{R}^n \to \mathbb{R}^n$ which is also an isometry.";
+    var translation = "A <b>translation</b> is any function \mathbb{R}^n \to \mathbb{R}^n$ defined by $x \mapsto x + v$ for some $latex v \in \mathbb{R}^n$";
+    var central_isom = "A <b>central isometry</b> is an isometry of $\mathbb{R}^n$ that fixes the origin.";
   	return (
-      <footer id="footer">
-        <span id="todo-count">
-          <strong>
-            {itemsLeft}
-          </strong>
-          {itemsLeftPhrase}
-        </span>
-        {clearCompletedButton}
-      </footer>
+      <div id="right">
+        <Block content={affine_isom_content} />
+        <Block content={translation} />
+        <Block content={central_isom} />
+      </div>
     );
   }
 

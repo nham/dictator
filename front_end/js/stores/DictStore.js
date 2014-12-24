@@ -10,7 +10,7 @@ var _open_portals = {};
 function create() {
   // Using the current timestamp + random number in place of a real id.
   var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-  _todos[id] = {
+  _open_portals[id] = {
     id: id,
     open: false,
   };
@@ -20,14 +20,14 @@ function create() {
  * Toggle a portal entry open/closed
  */
 function toggle(id) {
-  _todos[id].open = !_todos[id].open;
+  _open_portals[id].open = !_open_portals[id].open;
 }
 
 /**
  * Set a portal entry's open/closed state
  */
 function set(id, state) {
-  _todos[id].open = state;
+  _open_portals[id].open = state;
 }
 
 
@@ -36,24 +36,11 @@ var DictStore = {
   todoAppCallback: null,
 
   /**
-   * Tests whether all the remaining TODO items are marked as completed.
-   * @return {boolean}
-   */
-  areAllComplete: function() {
-    for (var id in _todos) {
-      if (!_todos[id].complete) {
-        return false;
-      }
-    }
-    return true;
-  },
-
-  /**
    * Get the entire collection of TODOs.
    * @return {object}
    */
   getAll: function() {
-    return _todos;
+    return _open_portals;
   },
 
   emitChange: function() {
@@ -98,7 +85,7 @@ AppDispatcher.register(function(payload) {
       break;
 
     case DictConstants.DICT_CLOSE_ALL:
-      for (var id in _todos) {
+      for (var id in _open_portals) {
           set(id, false);
       }
       break;

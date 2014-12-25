@@ -8,3 +8,6 @@ $('.portal').click(function() {
     var i = parseInt( $(this).attr('id').replace('portal', '') );
     action_cbs.TOGGLE_PORTAL(i);
 });
+
+// initialize all blocks to be hidden
+$('.block').addClass("hidden");

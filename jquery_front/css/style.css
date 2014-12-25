@@ -1,3 +1,7 @@
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 15px;
@@ -8,7 +12,7 @@ body {
 }
 
 #dictator {
-    background-color: #fff9f9;
+    background-color: #fcf9f9;
     max-width: 1000px;
     margin: auto;
 	border: 1px solid #ccc;
@@ -22,16 +26,26 @@ body {
     float: left;
     border-right: 4px solid #333;
     padding: 0;
+    height: 100%;
 }
 
 #dictator #right {
     margin-left: 50%;
-    padding: 0;
+    border-left: 4px solid #333;
+    /* for some reason, the 2 pixel padding on top and bottom
+     * makes the border work as expected. Haven't the slightest idea
+     * why.
+     */
+    padding: 2px 0 2px 0;
 }
 
 div.block {
     border-bottom: 1px solid #ccc;
     padding: 0 0 0 10px;
+}
+
+div.block:last-child {
+    border-bottom: 0;
 }
 
 #left p, #left ul {
@@ -41,4 +55,19 @@ div.block {
 
 .portal {
     background-color: #D8E084;
+    cursor: pointer;
+}
+
+
+
+p {
+    line-height: 1.5em;
+}
+
+h1 {
+    line-height: 1.1em;
+}
+
+ul {
+    line-height: 1.5em;
 }
